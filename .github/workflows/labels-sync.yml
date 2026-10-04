@@ -21,7 +21,7 @@ jobs:
     env:
       DELETE_EXTRA: "false"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Sync labels
         env:
