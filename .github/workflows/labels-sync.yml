@@ -1,0 +1,70 @@
+name: Sync labels
+
+# Keeps repository labels matching .github/labels.yml.
+# Existing labels are updated in place; labels not listed are left alone unless
+# DELETE_EXTRA is set to "true".
+
+on:
+  push:
+    branches: [main]
+    paths: [".github/labels.yml"]
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  sync:
+    name: Apply labels.yml
+    runs-on: ubuntu-latest
+    env:
+      DELETE_EXTRA: "false"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync labels
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 -m pip install --quiet pyyaml
+          python3 - <<'PY'
+          import json
+          import os
+          import subprocess
+
+          import yaml
+
+          repo = os.environ["REPO"]
+          delete_extra = os.environ.get("DELETE_EXTRA", "false") == "true"
+
+          with open(".github/labels.yml") as fh:
+              desired = yaml.safe_load(fh) or []
+
+          listed = subprocess.run(
+              ["gh", "label", "list", "--repo", repo, "--limit", "200", "--json", "name"],
+              capture_output=True, text=True, check=True,
+          ).stdout
+          existing = {item["name"] for item in json.loads(listed or "[]")}
+
+          for label in desired:
+              subprocess.run(
+                  [
+                      "gh", "label", "create", label["name"],
+                      "--repo", repo,
+                      "--color", label["color"],
+                      "--description", label.get("description", ""),
+                      "--force",
+                  ],
+                  check=True,
+              )
+              print(f"\u2713 {label['name']}")
+
+          if delete_extra:
+              for name in existing - {label["name"] for label in desired}:
+                  subprocess.run(
+                      ["gh", "label", "delete", name, "--repo", repo, "--yes"], check=False
+                  )
+                  print(f"\u2212 removed {name}")
+          PY

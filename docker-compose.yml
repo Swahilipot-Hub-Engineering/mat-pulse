@@ -1,0 +1,23 @@
+services:
+  mat-pulse:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mat-pulse-service
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+      - GTFS_AGENCY_NAME=Mombasa Matatu Transit SACCOs
+      - GTFS_AGENCY_URL=https://swahilipothub.co.ke
+      - GTFS_AGENCY_TIMEZONE=Africa/Nairobi
+      - STALE_VEHICLE_SECONDS=300
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Ask a question
+    url: https://github.com/Swahilipot-Hub-Engineering/start-here/discussions/categories/q-a
+    about: Questions about setup, the codebase, or how to contribute. No question is too basic.
+  - name: 🚀 Join a project
+    url: https://github.com/Swahilipot-Hub-Engineering/start-here/issues/new?template=join_project.yml
+    about: New here? Tell us what you would like to work on and a mentor will reply within 2 working days.
+  - name: 💡 Propose a new project
+    url: https://github.com/Swahilipot-Hub-Engineering/start-here/discussions/categories/project-proposals
+    about: Have an idea for a new Swahilipot innovation project? Start the conversation here.
+  - name: 🔒 Report a security vulnerability
+    url: https://github.com/Swahilipot-Hub-Engineering/.github/security/advisories/new
+    about: Please report vulnerabilities privately. Do not open a public issue.
+  - name: 📖 Contributor handbook
+    url: https://github.com/Swahilipot-Hub-Engineering/handbook
+    about: How we work — standards, review expectations, and the contributor ladder.

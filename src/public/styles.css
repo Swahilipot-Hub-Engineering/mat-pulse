@@ -1,0 +1,50 @@
+/* Custom Leaflet Map styling */
+.leaflet-container {
+  background-color: #0b1120 !important;
+}
+
+.matatu-marker-icon {
+  background: transparent;
+  border: none;
+}
+
+.matatu-marker-pin {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #f59e0b;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.matatu-marker-pin:hover {
+  transform: scale(1.15);
+}
+
+.stop-marker-pin {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.8);
+}
+
+/* Custom dark popup */
+.leaflet-popup-content-wrapper {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #334155 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+.leaflet-popup-tip {
+  background-color: #1e293b !important;
+}

@@ -1,0 +1,21 @@
+# CODEOWNERS — automatic reviewer assignment.
+# The LAST matching pattern wins. Owners need write access to the repository.
+# Docs: https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything in the repo
+*                       @Swahilipot-Hub-Engineering/maintainers
+
+# Documentation — mentors review, so docs stay newcomer-friendly
+*.md                    @Swahilipot-Hub-Engineering/mentors
+/docs/                  @Swahilipot-Hub-Engineering/mentors
+
+# Areas — replace the team handles with the real owners for this project
+# /src/components/      @Swahilipot-Hub-Engineering/frontend
+# /src/api/             @Swahilipot-Hub-Engineering/backend
+
+# Anything that changes how the project is built, deployed or secured
+# must be reviewed by an owner.
+/.github/               @Swahilipot-Hub-Engineering/owners
+/.github/workflows/     @Swahilipot-Hub-Engineering/owners
+/SECURITY.md            @Swahilipot-Hub-Engineering/owners
+/LICENSE                @Swahilipot-Hub-Engineering/owners

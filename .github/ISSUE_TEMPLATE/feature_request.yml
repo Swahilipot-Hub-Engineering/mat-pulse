@@ -1,0 +1,82 @@
+name: 💡 Feature request
+description: Suggest a new capability or an improvement
+title: "feat: "
+labels: ["type:feature", "status:needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Good feature requests start with a **problem**, not a solution. Tell us what is hard
+        today, and we will work out the best way to solve it together.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Who is affected, and what can they not do today?
+      placeholder: |
+        Fishers using the catch log cannot show a buyer a summary of last month's catch,
+        so they still carry a paper notebook to negotiate prices.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: What would you like to happen?
+      description: Describe the change you have in mind. Sketches and mockups are welcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you have considered
+      description: Other approaches, or why the existing features do not cover this.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: users
+    attributes:
+      label: Who benefits most?
+      options:
+        - Community members / end users
+        - Hub staff or programme facilitators
+        - Contributors and maintainers
+        - Partner organisations
+        - Not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: How important is this?
+      options:
+        - Blocking — people cannot use the project without it
+        - High — significantly improves a core workflow
+        - Medium — a clear improvement
+        - Low — nice to have
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Can you help build it?
+      options:
+        - label: I would like to work on this myself (with guidance if needed)
+          required: false
+        - label: I can help test it once it is built
+          required: false
+        - label: I can help with design or documentation for it
+          required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and discussions for this idea
+          required: true

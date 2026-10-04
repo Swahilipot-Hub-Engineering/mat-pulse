@@ -1,0 +1,99 @@
+name: 🐛 Bug report
+description: Something is not working as expected
+title: "bug: "
+labels: ["type:bug", "status:needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report this. A clear bug report is a real contribution.
+
+        If you are not sure whether it is a bug, open it anyway — we would rather look at it than miss it.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the problem in a sentence or two.
+      placeholder: When I tap "Save catch" while offline, the entry disappears and is never synced.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Exact steps someone else can follow to see the same problem.
+      placeholder: |
+        1. Open the app and turn off mobile data
+        2. Go to Catch → New entry
+        3. Fill in species and weight, tap Save
+        4. Turn mobile data back on and wait 30 seconds
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened?
+      description: Paste any error message as text rather than a screenshot, so it can be searched.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots, recordings or logs
+      description: Optional, but very helpful for anything visual. Drag files in here.
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Branch or version
+      description: Which branch or release did you see this on?
+      placeholder: staging @ a1b2c3d
+    validations:
+      required: false
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Where did this happen?
+      options:
+        - Local development
+        - Staging deployment
+        - Production
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Device and environment details
+      description: Browser and version, OS, phone model, network conditions — whatever is relevant.
+      placeholder: |
+        - Device: Tecno Spark 10, Android 13
+        - Browser: Chrome 120
+        - Network: 3G, intermittent
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and this has not already been reported
+          required: true
+        - label: I have not included any passwords, API keys, or personal data in this report
+          required: true

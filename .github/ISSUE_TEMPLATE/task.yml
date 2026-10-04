@@ -1,0 +1,45 @@
+name: 🛠 Task
+description: A defined piece of work — chore, refactor, docs, or design
+title: "task: "
+labels: ["status:needs-triage"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What needs to be done
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Definition of done
+      description: How we will know this is finished. Be specific and testable.
+      placeholder: |
+        - [ ] Dependencies updated and lockfile committed
+        - [ ] `npm run build` passes
+        - [ ] No new lint warnings
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type of work
+      options:
+        - Chore (dependencies, config, tooling)
+        - Refactor (no behaviour change)
+        - Documentation
+        - Design
+        - Testing
+        - Infrastructure / deployment
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and links
+      description: Related issues, PRs, or discussions.
+    validations:
+      required: false

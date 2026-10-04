@@ -1,0 +1,53 @@
+name: PR Branch Policy
+
+# Enforces the branching model: feat/* → staging → main.
+# This protects `main` from accidental direct feature merges.
+
+on:
+  pull_request:
+    types: [opened, synchronize, edited, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  enforce-branch-policy:
+    name: Enforce PR target branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check base and head branches
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+        run: |
+          echo "Base branch: $BASE"
+          echo "Head branch: $HEAD"
+
+          # Feature work targets staging
+          if [ "$BASE" = "staging" ]; then
+            echo "✅ PR targets 'staging'."
+            exit 0
+          fi
+
+          # main accepts releases from staging, and urgent hotfixes
+          if [ "$BASE" = "main" ]; then
+            case "$HEAD" in
+              staging)
+                echo "✅ Release PR: 'staging' → 'main'."
+                exit 0
+                ;;
+              hotfix/*)
+                echo "✅ Hotfix PR to 'main'. Remember to back-merge into 'staging'."
+                exit 0
+                ;;
+              *)
+                echo "::error::PRs to 'main' must come from 'staging' (release) or 'hotfix/*'."
+                echo "Retarget this PR at 'staging': Edit → change the base branch."
+                exit 1
+                ;;
+            esac
+          fi
+
+          echo "::error::PRs must target 'staging'. Retarget: Edit → change the base branch."
+          exit 1

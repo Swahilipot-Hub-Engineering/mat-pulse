@@ -1,0 +1,176 @@
+[
+  {
+    "routeId": "route-bamburi-posta",
+    "routeShortName": "BAM-POS",
+    "routeLongName": "Bamburi - Posta via Nyali Bridge",
+    "routeColor": "0088FF",
+    "agencyId": "sacco-bamburi",
+    "stops": [
+      {
+        "stopId": "stop-bamburi",
+        "stopName": "Bamburi Stage",
+        "latitude": -4.0010,
+        "longitude": 39.7150,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-lights",
+        "stopName": "Lights (Nyali)",
+        "latitude": -4.0150,
+        "longitude": 39.7020,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-links-rd",
+        "stopName": "Links Road Stage",
+        "latitude": -4.0240,
+        "longitude": 39.6930,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-nyali-cinemax",
+        "stopName": "Nyali Cinemax",
+        "latitude": -4.0320,
+        "longitude": 39.6840,
+        "sequence": 4
+      },
+      {
+        "stopId": "stop-nyali-bridge",
+        "stopName": "Nyali Bridge (Island)",
+        "latitude": -4.0375,
+        "longitude": 39.6765,
+        "sequence": 5
+      },
+      {
+        "stopId": "stop-buxton",
+        "stopName": "Buxton Junction",
+        "latitude": -4.0435,
+        "longitude": 39.6685,
+        "sequence": 6
+      },
+      {
+        "stopId": "stop-saba-saba",
+        "stopName": "Saba Saba",
+        "latitude": -4.0495,
+        "longitude": 39.6690,
+        "sequence": 7
+      },
+      {
+        "stopId": "stop-mackinnon",
+        "stopName": "Mackinnon Market",
+        "latitude": -4.0601,
+        "longitude": 39.6720,
+        "sequence": 8
+      },
+      {
+        "stopId": "stop-posta",
+        "stopName": "Posta (Moi Avenue)",
+        "latitude": -4.0628,
+        "longitude": 39.6705,
+        "sequence": 9
+      }
+    ]
+  },
+  {
+    "routeId": "route-likoni-posta",
+    "routeShortName": "LIK-POS",
+    "routeLongName": "Likoni Ferry - Posta / Digo Road",
+    "routeColor": "22C55E",
+    "agencyId": "sacco-likoni",
+    "stops": [
+      {
+        "stopId": "stop-likoni-south",
+        "stopName": "Likoni Ferry (South Ramp)",
+        "latitude": -4.0830,
+        "longitude": 39.6640,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-likoni-north",
+        "stopName": "Likoni Ferry (Island Ramp)",
+        "latitude": -4.0750,
+        "longitude": 39.6650,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-treasury-sq",
+        "stopName": "Treasury Square",
+        "latitude": -4.0650,
+        "longitude": 39.6710,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-posta",
+        "stopName": "Posta (Moi Avenue)",
+        "latitude": -4.0628,
+        "longitude": 39.6705,
+        "sequence": 4
+      },
+      {
+        "stopId": "stop-mackinnon",
+        "stopName": "Mackinnon Market",
+        "latitude": -4.0601,
+        "longitude": 39.6720,
+        "sequence": 5
+      },
+      {
+        "stopId": "stop-buxton",
+        "stopName": "Buxton Junction",
+        "latitude": -4.0435,
+        "longitude": 39.6685,
+        "sequence": 6
+      }
+    ]
+  },
+  {
+    "routeId": "route-changamwe-posta",
+    "routeShortName": "CHG-POS",
+    "routeLongName": "Changamwe - Posta via Makupa Causeway",
+    "routeColor": "F97316",
+    "agencyId": "sacco-changamwe",
+    "stops": [
+      {
+        "stopId": "stop-changamwe",
+        "stopName": "Changamwe Roundabout",
+        "latitude": -4.0350,
+        "longitude": 39.6300,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-magongo",
+        "stopName": "Magongo Junction",
+        "latitude": -4.0370,
+        "longitude": 39.6390,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-kibarani",
+        "stopName": "Kibarani Stage",
+        "latitude": -4.0400,
+        "longitude": 39.6480,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-makupa",
+        "stopName": "Makupa Causeway",
+        "latitude": -4.0410,
+        "longitude": 39.6540,
+        "sequence": 4
+      },
+      {
+        "stopId": "stop-saba-saba",
+        "stopName": "Saba Saba",
+        "latitude": -4.0495,
+        "longitude": 39.6690,
+        "sequence": 5
+      },
+      {
+        "stopId": "stop-posta",
+        "stopName": "Posta (Moi Avenue)",
+        "latitude": -4.0628,
+        "longitude": 39.6705,
+        "sequence": 6
+      }
+    ]
+  }
+]

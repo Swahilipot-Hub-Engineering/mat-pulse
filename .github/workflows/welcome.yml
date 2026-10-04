@@ -1,0 +1,49 @@
+name: Welcome new contributors
+
+# Greets first-time contributors. The first interaction with a project sets the tone —
+# a fast, warm, specific greeting measurably improves the chance of a completed PR.
+
+on:
+  issues:
+    types: [opened]
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: |
+            ### Karibu! 👋 Welcome to Swahilipot Hub
+
+            Thank you for opening your first issue here — we are glad you did.
+
+            A maintainer will take a look within **2 working days**. If you have not heard
+            anything by then, comment again and tag `@Swahilipot-Hub-Engineering/maintainers`.
+
+            While you wait:
+            - 📖 [Contributing guide](https://github.com/Swahilipot-Hub-Engineering/.github/blob/main/CONTRIBUTING.md)
+            - 🌟 [Good first issues](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+            - 💬 [Ask anything in Discussions](https://github.com/Swahilipot-Hub-Engineering/start-here/discussions)
+
+          pr-message: |
+            ### 🎉 Your first pull request here — congratulations!
+
+            This is a real milestone. A maintainer will review it within **2 working days**.
+
+            A few things that help it get merged quickly:
+            - ✅ Make sure CI is green (check the **Checks** tab — a red build will not be reviewed)
+            - 🎯 Confirm this PR targets **`staging`**, not `main`
+            - 📝 Fill in the PR template, including screenshots for any UI change
+            - 💬 Reply to review comments, even just "done" — it helps us track what is handled
+
+            Review comments are here to help you, not to judge you. Ask questions freely.
+
+            **Asante sana** for contributing. 🌊
