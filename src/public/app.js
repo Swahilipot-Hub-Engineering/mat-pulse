@@ -1,5 +1,5 @@
-// Mombasa Center Coordinates
-const MOMBASA_CENTER = [-4.0435, 39.6685];
+// Kenya Default Center Coordinates (Overlooking Nairobi & Southern transit corridors)
+const DEFAULT_CENTER = [-1.2864, 36.8172];
 
 let map;
 let routePolylines = [];
@@ -7,11 +7,14 @@ let stopMarkers = [];
 let vehicleMarkers = new Map();
 let currentRoutes = [];
 let allVehicles = [];
+let regions = [];
+let selectedRegion = 'all';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   initMap();
-  loadRoutes();
-  loadVehicles();
+  await loadRegions();
+  await loadRoutes();
+  await loadVehicles();
   setupEventListeners();
   connectSseStream();
 });
@@ -20,24 +23,49 @@ function initMap() {
   map = L.map('map', {
     zoomControl: true,
     attributionControl: false
-  }).setView(MOMBASA_CENTER, 13);
+  }).setView(DEFAULT_CENTER, 8);
 
-  // CartoDB Dark Matter tile layer (lightweight & clean dark mode)
+  // CartoDB Dark Matter tile layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 19,
     subdomains: 'abcd'
   }).addTo(map);
 }
 
+async function loadRegions() {
+  try {
+    const res = await fetch('/api/v1/transit/regions');
+    const data = await res.json();
+    if (!data.success) return;
+
+    regions = data.regions;
+    const select = document.getElementById('region-filter');
+    select.innerHTML = '';
+
+    regions.forEach(r => {
+      const opt = document.createElement('option');
+      opt.value = r.id;
+      opt.textContent = r.name;
+      select.appendChild(opt);
+    });
+
+    selectedRegion = select.value || 'all';
+  } catch (err) {
+    console.error('Failed to load transit regions:', err);
+  }
+}
+
 async function loadRoutes() {
   try {
-    const res = await fetch('/api/v1/transit/routes');
+    const query = selectedRegion === 'all' ? '' : `?region=${selectedRegion}`;
+    const res = await fetch(`/api/v1/transit/routes${query}`);
     const data = await res.json();
     if (!data.success) return;
 
     currentRoutes = data.routes;
     populateRouteFilter(currentRoutes);
     renderRoutesOnMap(currentRoutes);
+    updateLegend(currentRoutes);
   } catch (err) {
     console.error('Failed to load transit routes:', err);
   }
@@ -45,7 +73,7 @@ async function loadRoutes() {
 
 function populateRouteFilter(routes) {
   const select = document.getElementById('route-filter');
-  select.innerHTML = '<option value="ALL">All Mombasa Corridors</option>';
+  select.innerHTML = '<option value="ALL">All Routes in Region</option>';
 
   routes.forEach(route => {
     const opt = document.createElement('option');
@@ -56,7 +84,6 @@ function populateRouteFilter(routes) {
 }
 
 function renderRoutesOnMap(routes) {
-  // Clear previous layers
   routePolylines.forEach(layer => map.removeLayer(layer));
   stopMarkers.forEach(layer => map.removeLayer(layer));
   routePolylines = [];
@@ -66,17 +93,15 @@ function renderRoutesOnMap(routes) {
     const latlngs = route.stops.map(s => [s.latitude, s.longitude]);
     const color = `#${route.routeColor || '3B82F6'}`;
 
-    // Draw route line
     const polyline = L.polyline(latlngs, {
       color,
       weight: 4,
-      opacity: 0.8,
-      dashArray: '1, 6'
+      opacity: 0.85,
+      dashArray: '2, 6'
     }).addTo(map);
 
     routePolylines.push(polyline);
 
-    // Add Stop markers
     route.stops.forEach(stop => {
       const stopIcon = L.divIcon({
         className: 'stop-marker-icon',
@@ -99,9 +124,26 @@ function renderRoutesOnMap(routes) {
   });
 }
 
+function updateLegend(routes) {
+  const container = document.getElementById('legend-items');
+  if (!container) return;
+  container.innerHTML = '';
+
+  routes.slice(0, 5).forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'flex items-center gap-2 truncate';
+    div.innerHTML = `
+      <span class="w-3 h-3 rounded-full flex-shrink-0" style="background-color: #${r.routeColor || '3B82F6'}"></span>
+      <span class="truncate">${r.routeShortName}: ${r.routeLongName}</span>
+    `;
+    container.appendChild(div);
+  });
+}
+
 async function loadVehicles() {
   try {
-    const res = await fetch('/api/v1/transit/vehicles');
+    const query = selectedRegion === 'all' ? '' : `?region=${selectedRegion}`;
+    const res = await fetch(`/api/v1/transit/vehicles${query}`);
     const data = await res.json();
     if (data.success) {
       allVehicles = data.vehicles;
@@ -114,11 +156,17 @@ async function loadVehicles() {
 
 function updateVehiclesUI() {
   const selectedRoute = document.getElementById('route-filter').value;
-  const filtered = selectedRoute === 'ALL'
-    ? allVehicles
-    : allVehicles.filter(v => v.routeId === selectedRoute);
+  let filtered = allVehicles;
 
-  document.getElementById('stat-active-vehicles').textContent = `${allVehicles.length} Active Matatus`;
+  if (selectedRegion !== 'all') {
+    filtered = filtered.filter(v => v.regionId === selectedRegion);
+  }
+
+  if (selectedRoute !== 'ALL') {
+    filtered = filtered.filter(v => v.routeId === selectedRoute);
+  }
+
+  document.getElementById('stat-active-vehicles').textContent = `${allVehicles.length} Active Vehicles`;
   document.getElementById('vehicle-count-badge').textContent = filtered.length;
 
   renderVehicleList(filtered);
@@ -131,8 +179,8 @@ function renderVehicleList(vehicles) {
   if (vehicles.length === 0) {
     listEl.innerHTML = `
       <div class="text-center py-8 text-slate-500 text-sm">
-        <p>No active matatus on route.</p>
-        <p class="text-xs mt-1">Start the simulator to stream live telemetry!</p>
+        <p>No active vehicles in this selection.</p>
+        <p class="text-xs mt-1">Start the simulator to stream live telemetry across Kenya!</p>
       </div>
     `;
     return;
@@ -178,7 +226,6 @@ function renderVehicleList(vehicles) {
 function renderVehicleMarkers(vehicles) {
   const currentIds = new Set(vehicles.map(v => v.vehicleId));
 
-  // Remove stale markers
   for (const [id, marker] of vehicleMarkers.entries()) {
     if (!currentIds.has(id)) {
       map.removeLayer(marker);
@@ -186,7 +233,6 @@ function renderVehicleMarkers(vehicles) {
     }
   }
 
-  // Update or add markers
   vehicles.forEach(v => {
     const nextEta = v.etas && v.etas[0];
     const etaText = nextEta ? `~${Math.ceil(nextEta.etaSeconds / 60)} min to ${nextEta.stopName}` : 'In transit';
@@ -227,6 +273,16 @@ function renderVehicleMarkers(vehicles) {
 }
 
 function setupEventListeners() {
+  document.getElementById('region-filter').addEventListener('change', async (e) => {
+    selectedRegion = e.target.value;
+    const reg = regions.find(r => r.id === selectedRegion);
+    if (reg) {
+      map.flyTo([reg.center.latitude, reg.center.longitude], reg.zoom);
+    }
+    await loadRoutes();
+    await loadVehicles();
+  });
+
   document.getElementById('route-filter').addEventListener('change', () => {
     updateVehiclesUI();
   });
@@ -241,19 +297,26 @@ function setupEventListeners() {
     document.getElementById('sim-btn-text').textContent = 'Pinging...';
 
     try {
-      // Send a test ping for KDA 123X on Bamburi - Posta route
-      const mockLat = -4.0240 + (Math.random() - 0.5) * 0.005;
-      const mockLng = 39.6930 + (Math.random() - 0.5) * 0.005;
+      // Send a test ping depending on region
+      let mockLat = -1.2864 + (Math.random() - 0.5) * 0.01;
+      let mockLng = 36.8172 + (Math.random() - 0.5) * 0.01;
+      let mockRoute = 'route-nrb-rongai-cbd';
+
+      if (selectedRegion === 'mombasa') {
+        mockLat = -4.0240 + (Math.random() - 0.5) * 0.01;
+        mockLng = 39.6930 + (Math.random() - 0.5) * 0.01;
+        mockRoute = 'route-bamburi-posta';
+      }
 
       await fetch('/api/v1/telemetry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          vehicleId: 'kda-123x',
-          routeId: 'route-bamburi-posta',
+          vehicleId: 'kdd-demo-1',
+          routeId: mockRoute,
           latitude: mockLat,
           longitude: mockLng,
-          speedKmh: 35 + Math.round(Math.random() * 15),
+          speedKmh: 40,
           occupancyStatus: 'MANY_SEATS_AVAILABLE'
         })
       });
@@ -287,7 +350,7 @@ function connectSseStream() {
         updateVehiclesUI();
       }
     } catch (err) {
-      // Ignored heartbeat or invalid json
+      // Ignored
     }
   };
 

@@ -27,7 +27,7 @@ RUN npm ci --only=production && npm cache clean --force
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/src/public ./dist/public
-COPY --from=builder /app/src/gtfs/static/mombasa-routes.json ./dist/gtfs/static/mombasa-routes.json
+COPY --from=builder /app/src/gtfs/static/*.json ./dist/gtfs/static/
 
 EXPOSE 3000
 

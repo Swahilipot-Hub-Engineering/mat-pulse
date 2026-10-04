@@ -9,7 +9,7 @@ agents will follow it confidently.
 
 ## Project summary
 
-**Mat-Pulse** is an open-source real-time transit telemetry engine and GTFS / GTFS-Realtime (GTFS-RT) platform for Mombasa matatus. It is built with Node.js 20+, TypeScript, Express, and Leaflet, and generates compliant transit feeds for Google Maps, commuter apps, and chatbots.
+**Mat-Pulse** is an open-source real-time transit telemetry engine and GTFS / GTFS-Realtime (GTFS-RT) platform for Kenyan public transportation (matatus, buses, shuttles) across Nairobi, Mombasa, Kisumu, Nakuru, and inter-county corridors. It is built with Node.js 20+, TypeScript, Express, and Leaflet, and generates compliant transit feeds for Google Maps, commuter apps, and chatbots.
 
 ## Commands — use exactly these
 
@@ -17,7 +17,7 @@ agents will follow it confidently.
 | --- | --- | --- |
 | Install | `npm install` | Uses package.json / package-lock.json |
 | Dev server | `npm run dev` | Serves on port `3000` with hot-reload via tsx |
-| Simulator | `npm run simulate` | Streams mock matatu telemetry along Mombasa routes |
+| Simulator | `npm run simulate` | Streams mock matatu telemetry along Kenya corridors (Nairobi, Mombasa, Kisumu) |
 | Build | `npm run build` | Compiles TypeScript via `tsc` into `dist/` |
 | Typecheck | `npm run typecheck` | `tsc --noEmit` |
 | Test (all) | `npm test` | Runs vitest test suite |
@@ -29,13 +29,13 @@ Do **not** invent scripts. If a command you need does not exist, check `package.
 
 ```
 src/
-  models/       # TypeScript types for telemetry, vehicle states, routes, stops, and ETAs
+  models/       # TypeScript types for telemetry, vehicle states, routes, stops, regions, and ETAs
   gtfs/         # Static GTFS CSV generator and GTFS-Realtime Protobuf encoders
-    static/     # Mombasa transit corridors, stops, and route data (JSON)
+    static/     # Kenya corridors, stops, regions, and route data (JSON)
   engine/       # Spatial math (haversine, bearing), ETA estimator, vehicle state tracker
   routes/       # Express route handlers (/telemetry, /gtfs-rt, /transit, /health)
-  simulator/    # Mock telemetry simulator runner for local development
-  public/       # Mobile-first interactive Leaflet map dashboard
+  simulator/    # Mock telemetry simulator runner for local development across Kenyan cities
+  public/       # Mobile-first interactive Leaflet map dashboard with multi-region selector
 docs/           # Architecture, onboarding, runbook, ADRs
 tests/          # Vitest automated test suite (geo, eta, tracker, gtfs-rt, api)
 .github/        # CI workflows, branch policy, issue templates, labels

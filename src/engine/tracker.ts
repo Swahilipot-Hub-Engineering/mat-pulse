@@ -26,8 +26,12 @@ export class VehicleTracker extends EventEmitter {
     return this.routes.get(routeId);
   }
 
-  public getAllRoutes(): Route[] {
-    return Array.from(this.routes.values());
+  public getAllRoutes(regionId?: string): Route[] {
+    const all = Array.from(this.routes.values());
+    if (regionId && regionId !== 'all') {
+      return all.filter(r => r.regionId === regionId);
+    }
+    return all;
   }
 
   public recordTelemetry(ping: TelemetryPing): VehicleState {
@@ -57,6 +61,7 @@ export class VehicleTracker extends EventEmitter {
     const updatedState: VehicleState = {
       vehicleId: ping.vehicleId,
       routeId: ping.routeId,
+      regionId: route.regionId,
       tripId: ping.tripId || `trip-${ping.routeId}-${ping.vehicleId}`,
       latitude: ping.latitude,
       longitude: ping.longitude,
@@ -79,7 +84,7 @@ export class VehicleTracker extends EventEmitter {
     return this.vehicles.get(vehicleId);
   }
 
-  public getActiveVehicles(routeId?: string): VehicleState[] {
+  public getActiveVehicles(routeId?: string, regionId?: string): VehicleState[] {
     const now = Date.now();
     const staleThresholdMs = config.staleVehicleThresholdSeconds * 1000;
     const active: VehicleState[] = [];
@@ -91,9 +96,15 @@ export class VehicleTracker extends EventEmitter {
         continue;
       }
 
-      if (!routeId || vehicle.routeId === routeId) {
-        active.push(vehicle);
+      if (routeId && vehicle.routeId !== routeId) {
+        continue;
       }
+
+      if (regionId && regionId !== 'all' && vehicle.regionId !== regionId) {
+        continue;
+      }
+
+      active.push(vehicle);
     }
 
     return active;
@@ -104,9 +115,13 @@ export class VehicleTracker extends EventEmitter {
     this.emit('alertAdded', alert);
   }
 
-  public getActiveAlerts(): TransitAlert[] {
+  public getActiveAlerts(regionId?: string): TransitAlert[] {
     const nowSec = Math.floor(Date.now() / 1000);
-    return Array.from(this.alerts.values()).filter(a => !a.endTime || a.endTime > nowSec);
+    const active = Array.from(this.alerts.values()).filter(a => !a.endTime || a.endTime > nowSec);
+    if (regionId && regionId !== 'all') {
+      return active.filter(a => !a.regionId || a.regionId === regionId);
+    }
+    return active;
   }
 
   public clearAlert(alertId: string): boolean {

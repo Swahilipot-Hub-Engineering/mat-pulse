@@ -3,6 +3,13 @@ export interface Coordinates {
   longitude: number;
 }
 
+export interface Region {
+  id: string;
+  name: string;
+  center: Coordinates;
+  zoom: number;
+}
+
 export interface Stop extends Coordinates {
   stopId: string;
   stopName: string;
@@ -15,6 +22,7 @@ export interface Route {
   routeLongName: string;
   routeColor: string;
   agencyId: string;
+  regionId: string;
   stops: Stop[];
 }
 
@@ -40,6 +48,7 @@ export interface EtaPrediction {
 export interface VehicleState extends Coordinates {
   vehicleId: string;
   routeId: string;
+  regionId: string;
   tripId: string;
   speedKmh: number;
   bearing: number;
@@ -52,6 +61,7 @@ export interface VehicleState extends Coordinates {
 
 export interface TransitAlert {
   alertId: string;
+  regionId?: string;
   routeId?: string;
   stopId?: string;
   headerText: string;

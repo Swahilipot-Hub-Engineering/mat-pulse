@@ -11,21 +11,31 @@ describe('HTTP API Endpoints', () => {
     expect(res.body.stats.routesCount).toBeGreaterThan(0);
   });
 
-  it('GET /api/v1/transit/routes returns Mombasa routes', async () => {
-    const res = await request(app).get('/api/v1/transit/routes');
+  it('GET /api/v1/transit/regions returns Kenyan transit regions', async () => {
+    const res = await request(app).get('/api/v1/transit/regions');
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.routes.length).toBeGreaterThan(0);
-    expect(res.body.routes[0].routeId).toBeDefined();
+    expect(res.body.regions.length).toBeGreaterThanOrEqual(3);
   });
 
-  it('POST /api/v1/telemetry records ping and returns updated vehicle state', async () => {
+  it('GET /api/v1/transit/routes returns routes across Kenya and supports region filter', async () => {
+    const resAll = await request(app).get('/api/v1/transit/routes');
+    expect(resAll.status).toBe(200);
+    expect(resAll.body.success).toBe(true);
+    expect(resAll.body.routes.length).toBeGreaterThan(0);
+
+    const resNrb = await request(app).get('/api/v1/transit/routes?region=nairobi');
+    expect(resNrb.status).toBe(200);
+    expect(resNrb.body.routes.every((r: any) => r.regionId === 'nairobi')).toBe(true);
+  });
+
+  it('POST /api/v1/telemetry records ping and assigns region from route', async () => {
     const payload = {
-      vehicleId: 'kda-test-1',
-      routeId: 'route-bamburi-posta',
-      latitude: -4.0150,
-      longitude: 39.7020,
-      speedKmh: 35
+      vehicleId: 'kdd-test-1',
+      routeId: 'route-nrb-rongai-cbd',
+      latitude: -1.3486,
+      longitude: 36.7645,
+      speedKmh: 45
     };
 
     const res = await request(app)
@@ -34,10 +44,11 @@ describe('HTTP API Endpoints', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.data.vehicleId).toBe('kda-test-1');
+    expect(res.body.data.vehicleId).toBe('kdd-test-1');
+    expect(res.body.data.regionId).toBe('nairobi');
   });
 
-  it('POST /api/v1/telemetry rejects invalid coordinates', async () => {
+  it('POST /api/v1/telemetry rejects coordinates outside Kenya', async () => {
     const payload = {
       vehicleId: 'kda-test-2',
       routeId: 'route-bamburi-posta',

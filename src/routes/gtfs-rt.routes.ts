@@ -14,8 +14,9 @@ export const gtfsRtRouter = Router();
 // ========================
 
 // Protobuf endpoint for Google Transit / OpenTripPlanner
-gtfsRtRouter.get('/vehicle-positions.pb', (_req: Request, res: Response): void => {
-  const vehicles = tracker.getActiveVehicles();
+gtfsRtRouter.get('/vehicle-positions.pb', (req: Request, res: Response): void => {
+  const region = req.query.region ? String(req.query.region) : undefined;
+  const vehicles = tracker.getActiveVehicles(undefined, region);
   const feed = buildVehiclePositionsFeed(vehicles);
   const buffer = encodeFeedToProtobuf(feed);
 
@@ -25,8 +26,9 @@ gtfsRtRouter.get('/vehicle-positions.pb', (_req: Request, res: Response): void =
 });
 
 // JSON mirror endpoint for web and developer inspection
-gtfsRtRouter.get('/vehicle-positions.json', (_req: Request, res: Response): void => {
-  const vehicles = tracker.getActiveVehicles();
+gtfsRtRouter.get('/vehicle-positions.json', (req: Request, res: Response): void => {
+  const region = req.query.region ? String(req.query.region) : undefined;
+  const vehicles = tracker.getActiveVehicles(undefined, region);
   const feed = buildVehiclePositionsFeed(vehicles);
   res.setHeader('Content-Type', 'application/json');
   res.json(feed);
@@ -35,10 +37,11 @@ gtfsRtRouter.get('/vehicle-positions.json', (_req: Request, res: Response): void
 // Default alias for vehicle-positions
 gtfsRtRouter.get('/vehicle-positions', (req: Request, res: Response): void => {
   const format = req.query.format === 'json' ? 'json' : 'pb';
+  const regionQuery = req.query.region ? `?region=${req.query.region}` : '';
   if (format === 'json') {
-    res.redirect('/api/v1/gtfs-rt/vehicle-positions.json');
+    res.redirect(`/api/v1/gtfs-rt/vehicle-positions.json${regionQuery}`);
   } else {
-    res.redirect('/api/v1/gtfs-rt/vehicle-positions.pb');
+    res.redirect(`/api/v1/gtfs-rt/vehicle-positions.pb${regionQuery}`);
   }
 });
 
@@ -46,8 +49,9 @@ gtfsRtRouter.get('/vehicle-positions', (req: Request, res: Response): void => {
 // Trip Updates Feed
 // ========================
 
-gtfsRtRouter.get('/trip-updates.pb', (_req: Request, res: Response): void => {
-  const vehicles = tracker.getActiveVehicles();
+gtfsRtRouter.get('/trip-updates.pb', (req: Request, res: Response): void => {
+  const region = req.query.region ? String(req.query.region) : undefined;
+  const vehicles = tracker.getActiveVehicles(undefined, region);
   const feed = buildTripUpdatesFeed(vehicles);
   const buffer = encodeFeedToProtobuf(feed);
 
@@ -56,8 +60,9 @@ gtfsRtRouter.get('/trip-updates.pb', (_req: Request, res: Response): void => {
   res.send(Buffer.from(buffer));
 });
 
-gtfsRtRouter.get('/trip-updates.json', (_req: Request, res: Response): void => {
-  const vehicles = tracker.getActiveVehicles();
+gtfsRtRouter.get('/trip-updates.json', (req: Request, res: Response): void => {
+  const region = req.query.region ? String(req.query.region) : undefined;
+  const vehicles = tracker.getActiveVehicles(undefined, region);
   const feed = buildTripUpdatesFeed(vehicles);
   res.setHeader('Content-Type', 'application/json');
   res.json(feed);
@@ -65,10 +70,11 @@ gtfsRtRouter.get('/trip-updates.json', (_req: Request, res: Response): void => {
 
 gtfsRtRouter.get('/trip-updates', (req: Request, res: Response): void => {
   const format = req.query.format === 'json' ? 'json' : 'pb';
+  const regionQuery = req.query.region ? `?region=${req.query.region}` : '';
   if (format === 'json') {
-    res.redirect('/api/v1/gtfs-rt/trip-updates.json');
+    res.redirect(`/api/v1/gtfs-rt/trip-updates.json${regionQuery}`);
   } else {
-    res.redirect('/api/v1/gtfs-rt/trip-updates.pb');
+    res.redirect(`/api/v1/gtfs-rt/trip-updates.pb${regionQuery}`);
   }
 });
 
@@ -76,8 +82,9 @@ gtfsRtRouter.get('/trip-updates', (req: Request, res: Response): void => {
 // Service Alerts Feed
 // ========================
 
-gtfsRtRouter.get('/alerts.pb', (_req: Request, res: Response): void => {
-  const alerts = tracker.getActiveAlerts();
+gtfsRtRouter.get('/alerts.pb', (req: Request, res: Response): void => {
+  const region = req.query.region ? String(req.query.region) : undefined;
+  const alerts = tracker.getActiveAlerts(region);
   const feed = buildAlertsFeed(alerts);
   const buffer = encodeFeedToProtobuf(feed);
 
@@ -86,8 +93,9 @@ gtfsRtRouter.get('/alerts.pb', (_req: Request, res: Response): void => {
   res.send(Buffer.from(buffer));
 });
 
-gtfsRtRouter.get('/alerts.json', (_req: Request, res: Response): void => {
-  const alerts = tracker.getActiveAlerts();
+gtfsRtRouter.get('/alerts.json', (req: Request, res: Response): void => {
+  const region = req.query.region ? String(req.query.region) : undefined;
+  const alerts = tracker.getActiveAlerts(region);
   const feed = buildAlertsFeed(alerts);
   res.setHeader('Content-Type', 'application/json');
   res.json(feed);
@@ -102,6 +110,7 @@ gtfsRtRouter.post('/alerts', (req: Request, res: Response): void => {
 
   const alert = {
     alertId: body.alertId || `alert-${Date.now()}`,
+    regionId: body.regionId,
     routeId: body.routeId,
     stopId: body.stopId,
     headerText: String(body.headerText),

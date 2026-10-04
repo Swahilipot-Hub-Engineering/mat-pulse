@@ -1,0 +1,32 @@
+[
+  {
+    "id": "all",
+    "name": "All Kenya",
+    "center": { "latitude": -0.5, "longitude": 37.5 },
+    "zoom": 7
+  },
+  {
+    "id": "nairobi",
+    "name": "Nairobi Metropolitan",
+    "center": { "latitude": -1.2864, "longitude": 36.8172 },
+    "zoom": 12
+  },
+  {
+    "id": "mombasa",
+    "name": "Mombasa & Coast",
+    "center": { "latitude": -4.0435, "longitude": 39.6685 },
+    "zoom": 12
+  },
+  {
+    "id": "kisumu",
+    "name": "Kisumu & Lake Region",
+    "center": { "latitude": -0.0917, "longitude": 34.7680 },
+    "zoom": 13
+  },
+  {
+    "id": "nakuru",
+    "name": "Nakuru & Rift Valley",
+    "center": { "latitude": -0.3031, "longitude": 36.0800 },
+    "zoom": 13
+  }
+]

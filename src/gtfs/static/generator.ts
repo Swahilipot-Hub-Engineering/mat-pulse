@@ -1,20 +1,40 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { Route, Stop } from '../../models/types.js';
+import { Region, Route, Stop } from '../../models/types.js';
 import { config } from '../../config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export function loadStaticRoutes(): Route[] {
-  const routesPath = path.join(__dirname, 'mombasa-routes.json');
-  const raw = fs.readFileSync(routesPath, 'utf-8');
-  return JSON.parse(raw) as Route[];
+export function loadRegions(): Region[] {
+  const regionsPath = path.join(__dirname, 'kenya-regions.json');
+  if (fs.existsSync(regionsPath)) {
+    const raw = fs.readFileSync(regionsPath, 'utf-8');
+    return JSON.parse(raw) as Region[];
+  }
+  return [
+    { id: 'all', name: 'All Kenya', center: { latitude: -0.5, longitude: 37.5 }, zoom: 7 }
+  ];
 }
 
-export function getAllStops(): Stop[] {
-  const routes = loadStaticRoutes();
+export function loadStaticRoutes(regionId?: string): Route[] {
+  const routesPath = path.join(__dirname, 'kenya-routes.json');
+  const legacyPath = path.join(__dirname, 'mombasa-routes.json');
+  const targetPath = fs.existsSync(routesPath) ? routesPath : legacyPath;
+
+  const raw = fs.readFileSync(targetPath, 'utf-8');
+  const routes = JSON.parse(raw) as Route[];
+
+  if (regionId && regionId !== 'all') {
+    return routes.filter(r => r.regionId === regionId);
+  }
+
+  return routes;
+}
+
+export function getAllStops(regionId?: string): Stop[] {
+  const routes = loadStaticRoutes(regionId);
   const stopMap = new Map<string, Stop>();
 
   for (const route of routes) {
@@ -28,20 +48,20 @@ export function getAllStops(): Stop[] {
   return Array.from(stopMap.values());
 }
 
-export function generateGtfsCsvFiles(): { [filename: string]: string } {
-  const routes = loadStaticRoutes();
-  const stops = getAllStops();
+export function generateGtfsCsvFiles(regionId?: string): { [filename: string]: string } {
+  const routes = loadStaticRoutes(regionId);
+  const stops = getAllStops(regionId);
 
   // agency.txt
   const agencyTxt = [
     'agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone',
-    `sacco-mombasa,"${config.gtfsAgencyName}","${config.gtfsAgencyUrl}","${config.gtfsAgencyTimezone}",sw,+254700000000`
+    `agency-kenya,"${config.gtfsAgencyName}","${config.gtfsAgencyUrl}","${config.gtfsAgencyTimezone}",sw,+254700000000`
   ].join('\n');
 
   // routes.txt
   const routesHeader = 'route_id,agency_id,route_short_name,route_long_name,route_type,route_color,route_text_color';
   const routesRows = routes.map(r =>
-    `${r.routeId},sacco-mombasa,"${r.routeShortName}","${r.routeLongName}",3,${r.routeColor},FFFFFF`
+    `${r.routeId},agency-kenya,"${r.routeShortName}","${r.routeLongName}",3,${r.routeColor},FFFFFF`
   );
   const routesTxt = [routesHeader, ...routesRows].join('\n');
 

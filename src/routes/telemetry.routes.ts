@@ -19,11 +19,11 @@ telemetryRouter.post('/', (req: Request, res: Response): void => {
     return;
   }
 
-  // Validate Mombasa region coordinate bounding box roughly (-4.3 to -3.8 lat, 39.4 to 39.8 lon)
-  if (body.latitude < -5.0 || body.latitude > -3.0 || body.longitude < 39.0 || body.longitude > 40.5) {
+  // Validate Kenyan national coordinate bounding box (-5.0 to 5.5 lat, 33.0 to 42.5 lon)
+  if (body.latitude < -5.0 || body.latitude > 5.5 || body.longitude < 33.0 || body.longitude > 42.5) {
     res.status(400).json({
       error: 'Coordinate out of range',
-      message: 'Coordinates must be within the coastal transit zone'
+      message: 'Coordinates must be within Kenya transit boundaries (latitude: -5.0 to 5.5, longitude: 33.0 to 42.5)'
     });
     return;
   }

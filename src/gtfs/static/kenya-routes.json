@@ -1,0 +1,397 @@
+[
+  {
+    "routeId": "route-nrb-rongai-cbd",
+    "routeShortName": "125",
+    "routeLongName": "Ongata Rongai - Nairobi CBD via Lang'ata Road",
+    "routeColor": "EC4899",
+    "agencyId": "sacco-ongata-line",
+    "regionId": "nairobi",
+    "stops": [
+      {
+        "stopId": "stop-nrb-rongai",
+        "stopName": "Ongata Rongai Stage",
+        "latitude": -1.3965,
+        "longitude": 36.7588,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-nrb-galleria",
+        "stopName": "Galleria Mall / Bomas",
+        "latitude": -1.3486,
+        "longitude": 36.7645,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-nrb-langata-cemetery",
+        "stopName": "Lang'ata Barracks",
+        "latitude": -1.3290,
+        "longitude": 36.7870,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-nrb-madaraka",
+        "stopName": "Madaraka / Strathmore",
+        "latitude": -1.3090,
+        "longitude": 36.8120,
+        "sequence": 4
+      },
+      {
+        "stopId": "stop-nrb-nyayo",
+        "stopName": "Nyayo Stadium",
+        "latitude": -1.3020,
+        "longitude": 36.8235,
+        "sequence": 5
+      },
+      {
+        "stopId": "stop-nrb-railways",
+        "stopName": "Railways Terminus (CBD)",
+        "latitude": -1.2905,
+        "longitude": 36.8260,
+        "sequence": 6
+      }
+    ]
+  },
+  {
+    "routeId": "route-nrb-githurai-cbd",
+    "routeShortName": "45",
+    "routeLongName": "Githurai 44/45 - Nairobi CBD via Thika Superhighway",
+    "routeColor": "8B5CF6",
+    "agencyId": "sacco-githurai-exp",
+    "regionId": "nairobi",
+    "stops": [
+      {
+        "stopId": "stop-nrb-githurai",
+        "stopName": "Githurai Roundabout",
+        "latitude": -1.1990,
+        "longitude": 36.9250,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-nrb-roysambu",
+        "stopName": "Roysambu / TRM",
+        "latitude": -1.2185,
+        "longitude": 36.8890,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-nrb-allsops",
+        "stopName": "Allsops / Outer Ring",
+        "latitude": -1.2480,
+        "longitude": 36.8720,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-nrb-muthaiga",
+        "stopName": "Muthaiga Junction",
+        "latitude": -1.2640,
+        "longitude": 36.8370,
+        "sequence": 4
+      },
+      {
+        "stopId": "stop-nrb-ngara",
+        "stopName": "Ngara Stage",
+        "latitude": -1.2770,
+        "longitude": 36.8250,
+        "sequence": 5
+      },
+      {
+        "stopId": "stop-nrb-odeon",
+        "stopName": "Odeon Cinema (CBD)",
+        "latitude": -1.2825,
+        "longitude": 36.8230,
+        "sequence": 6
+      }
+    ]
+  },
+  {
+    "routeId": "route-nrb-kangemi-cbd",
+    "routeShortName": "23",
+    "routeLongName": "Kangemi - Nairobi CBD via Waiyaki Way",
+    "routeColor": "06B6D4",
+    "agencyId": "sacco-kanyoki",
+    "regionId": "nairobi",
+    "stops": [
+      {
+        "stopId": "stop-nrb-kangemi",
+        "stopName": "Kangemi Stage",
+        "latitude": -1.2650,
+        "longitude": 36.7450,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-nrb-westlands",
+        "stopName": "Westlands Roundabout",
+        "latitude": -1.2640,
+        "longitude": 36.8040,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-nrb-museum-hill",
+        "stopName": "Museum Hill",
+        "latitude": -1.2750,
+        "longitude": 36.8150,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-nrb-koja",
+        "stopName": "Koja Mosque Terminus (CBD)",
+        "latitude": -1.2810,
+        "longitude": 36.8210,
+        "sequence": 4
+      }
+    ]
+  },
+  {
+    "routeId": "route-bamburi-posta",
+    "routeShortName": "BAM-POS",
+    "routeLongName": "Bamburi - Posta via Nyali Bridge",
+    "routeColor": "0088FF",
+    "agencyId": "sacco-bamburi",
+    "regionId": "mombasa",
+    "stops": [
+      {
+        "stopId": "stop-bamburi",
+        "stopName": "Bamburi Stage",
+        "latitude": -4.0010,
+        "longitude": 39.7150,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-lights",
+        "stopName": "Lights (Nyali)",
+        "latitude": -4.0150,
+        "longitude": 39.7020,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-links-rd",
+        "stopName": "Links Road Stage",
+        "latitude": -4.0240,
+        "longitude": 39.6930,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-nyali-cinemax",
+        "stopName": "Nyali Cinemax",
+        "latitude": -4.0320,
+        "longitude": 39.6840,
+        "sequence": 4
+      },
+      {
+        "stopId": "stop-nyali-bridge",
+        "stopName": "Nyali Bridge (Island)",
+        "latitude": -4.0375,
+        "longitude": 39.6765,
+        "sequence": 5
+      },
+      {
+        "stopId": "stop-buxton",
+        "stopName": "Buxton Junction",
+        "latitude": -4.0435,
+        "longitude": 39.6685,
+        "sequence": 6
+      },
+      {
+        "stopId": "stop-saba-saba",
+        "stopName": "Saba Saba",
+        "latitude": -4.0495,
+        "longitude": 39.6690,
+        "sequence": 7
+      },
+      {
+        "stopId": "stop-mackinnon",
+        "stopName": "Mackinnon Market",
+        "latitude": -4.0601,
+        "longitude": 39.6720,
+        "sequence": 8
+      },
+      {
+        "stopId": "stop-posta",
+        "stopName": "Posta (Moi Avenue)",
+        "latitude": -4.0628,
+        "longitude": 39.6705,
+        "sequence": 9
+      }
+    ]
+  },
+  {
+    "routeId": "route-likoni-posta",
+    "routeShortName": "LIK-POS",
+    "routeLongName": "Likoni Ferry - Posta / Digo Road",
+    "routeColor": "22C55E",
+    "agencyId": "sacco-likoni",
+    "regionId": "mombasa",
+    "stops": [
+      {
+        "stopId": "stop-likoni-south",
+        "stopName": "Likoni Ferry (South Ramp)",
+        "latitude": -4.0830,
+        "longitude": 39.6640,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-likoni-north",
+        "stopName": "Likoni Ferry (Island Ramp)",
+        "latitude": -4.0750,
+        "longitude": 39.6650,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-treasury-sq",
+        "stopName": "Treasury Square",
+        "latitude": -4.0650,
+        "longitude": 39.6710,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-posta",
+        "stopName": "Posta (Moi Avenue)",
+        "latitude": -4.0628,
+        "longitude": 39.6705,
+        "sequence": 4
+      },
+      {
+        "stopId": "stop-mackinnon",
+        "stopName": "Mackinnon Market",
+        "latitude": -4.0601,
+        "longitude": 39.6720,
+        "sequence": 5
+      },
+      {
+        "stopId": "stop-buxton",
+        "stopName": "Buxton Junction",
+        "latitude": -4.0435,
+        "longitude": 39.6685,
+        "sequence": 6
+      }
+    ]
+  },
+  {
+    "routeId": "route-changamwe-posta",
+    "routeShortName": "CHG-POS",
+    "routeLongName": "Changamwe - Posta via Makupa Causeway",
+    "routeColor": "F97316",
+    "agencyId": "sacco-changamwe",
+    "regionId": "mombasa",
+    "stops": [
+      {
+        "stopId": "stop-changamwe",
+        "stopName": "Changamwe Roundabout",
+        "latitude": -4.0350,
+        "longitude": 39.6300,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-magongo",
+        "stopName": "Magongo Junction",
+        "latitude": -4.0370,
+        "longitude": 39.6390,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-kibarani",
+        "stopName": "Kibarani Stage",
+        "latitude": -4.0400,
+        "longitude": 39.6480,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-makupa",
+        "stopName": "Makupa Causeway",
+        "latitude": -4.0410,
+        "longitude": 39.6540,
+        "sequence": 4
+      },
+      {
+        "stopId": "stop-saba-saba",
+        "stopName": "Saba Saba",
+        "latitude": -4.0495,
+        "longitude": 39.6690,
+        "sequence": 5
+      },
+      {
+        "stopId": "stop-posta",
+        "stopName": "Posta (Moi Avenue)",
+        "latitude": -4.0628,
+        "longitude": 39.6705,
+        "sequence": 6
+      }
+    ]
+  },
+  {
+    "routeId": "route-ksm-kondele-cbd",
+    "routeShortName": "KSM-1",
+    "routeLongName": "Kondele - Kisumu Bus Park via Mega Plaza",
+    "routeColor": "10B981",
+    "agencyId": "sacco-lake-transit",
+    "regionId": "kisumu",
+    "stops": [
+      {
+        "stopId": "stop-ksm-kondele",
+        "stopName": "Kondele Roundabout",
+        "latitude": -0.0880,
+        "longitude": 34.7780,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-ksm-patel",
+        "stopName": "Patel Flats",
+        "latitude": -0.0940,
+        "longitude": 34.7700,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-ksm-mega",
+        "stopName": "Mega Plaza / Oginga Odinga St",
+        "latitude": -0.1010,
+        "longitude": 34.7570,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-ksm-bus-park",
+        "stopName": "Kisumu Main Bus Park",
+        "latitude": -0.1040,
+        "longitude": 34.7530,
+        "sequence": 4
+      }
+    ]
+  },
+  {
+    "routeId": "route-nak-pipeline-cbd",
+    "routeShortName": "NAK-1",
+    "routeLongName": "Pipeline - Nakuru CBD via Kanu Street",
+    "routeColor": "EAB308",
+    "agencyId": "sacco-rift-transit",
+    "regionId": "nakuru",
+    "stops": [
+      {
+        "stopId": "stop-nak-pipeline",
+        "stopName": "Pipeline Stage",
+        "latitude": -0.3200,
+        "longitude": 36.1200,
+        "sequence": 1
+      },
+      {
+        "stopId": "stop-nak-free-area",
+        "stopName": "Free Area Stage",
+        "latitude": -0.3080,
+        "longitude": 36.1020,
+        "sequence": 2
+      },
+      {
+        "stopId": "stop-nak-kanu-st",
+        "stopName": "Kanu Street",
+        "latitude": -0.2980,
+        "longitude": 36.0820,
+        "sequence": 3
+      },
+      {
+        "stopId": "stop-nak-cbd",
+        "stopName": "Nakuru Main Stage (CBD)",
+        "latitude": -0.2880,
+        "longitude": 36.0710,
+        "sequence": 4
+      }
+    ]
+  }
+]

@@ -4,7 +4,8 @@ import { loadStaticRoutes } from '../src/gtfs/static/generator.js';
 
 describe('ETA Engine', () => {
   const routes = loadStaticRoutes();
-  const bamburiRoute = routes[0];
+  const bamburiRoute = routes.find(r => r.routeId === 'route-bamburi-posta')!;
+  const rongaiRoute = routes.find(r => r.routeId === 'route-nrb-rongai-cbd')!;
 
   it('calculates ETAs for upcoming stops along Bamburi-Posta route', () => {
     // Current position near Lights stage
@@ -21,6 +22,17 @@ describe('ETA Engine', () => {
       expect(result.etas[i].etaSeconds).toBeGreaterThan(result.etas[i - 1].etaSeconds);
       expect(result.etas[i].distanceMeters).toBeGreaterThan(result.etas[i - 1].distanceMeters);
     }
+  });
+
+  it('calculates ETAs for Nairobi corridor (Rongai - CBD)', () => {
+    // Current position near Galleria Mall
+    const currentPos = { latitude: -1.3486, longitude: 36.7645 };
+    const currentSpeedKmh = 45;
+
+    const result = calculateRouteEtas(currentPos, currentSpeedKmh, rongaiRoute);
+
+    expect(result.nextStopIndex).toBeGreaterThanOrEqual(1);
+    expect(result.etas.length).toBeGreaterThan(0);
   });
 
   it('handles vehicle at the end of the route gracefully', () => {
